@@ -1,0 +1,107 @@
+/* General body styling */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text color */
+  font-family: 'Roboto', sans-serif; /* Sleek modern font */
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Leaderboard container styling */
+.leaderboard-container {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  padding: 2rem;
+  background-color: #1e1e2f; /* Darker gray background */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+  color: #e0e0e0; /* Light text color */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title styling */
+.leaderboard-container h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color:#1bf4f4; /* Green title */
+  margin-bottom: 1.5rem;
+}
+
+/* Table styling */
+.leaderboard-table {
+  width: 90%; /* Adjust table width */
+  max-width: 1200px;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #2a2a3f; /* Dark table background */
+}
+
+.leaderboard-table th, .leaderboard-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #444; /* Darker border */
+  color: #e0e0e0; /* Light text */
+}
+
+.leaderboard-table th {
+  background-color: #333; /* Dark header */
+  color:#27e2e2; /* Green text for headers */
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background-color: #1e1e2f; /* Slightly lighter dark for alternating rows */
+}
+
+.leaderboard-table tr:hover {
+  background-color:#008080; /* Green hover effect */
+  color: #000; /* Black text on hover */
+  cursor: pointer;
+  transform: scale(1.02); /* Slight zoom effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.leaderboard-table td {
+  font-size: 1rem;
+}
+
+/* Error message styling */
+.error {
+  color: #f44336; /* Red for errors */
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Button styling */
+.btn {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #333; /* Dark button */
+  color:#008080; /* Green text */
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+  background-color:#008080; /* Green hover effect */
+  color: #000; /* Black text on hover */
+  transform: scale(1.1); /* Larger zoom effect */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6); /* Add shadow on hover */
+}

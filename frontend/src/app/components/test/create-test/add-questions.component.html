@@ -1,0 +1,138 @@
+<div class="page-container">
+    <header class="page-header">
+      <h2>Add Questions</h2>
+      <p class="subtitle">Test : {{testName}}</p>
+    </header>
+  
+    <main class="main-content">
+      <!-- Action Buttons -->
+      <div class="actions-bar">
+        <button (click)="addMCQ()" class="btn btn-primary" [disabled]="loading">
+          <i class="fas fa-plus"></i> Add MCQ
+        </button>
+        <button (click)="addCodingQuestion()" class="btn btn-secondary" [disabled]="loading">
+          <i class="fas fa-code"></i> Add Coding Question
+        </button>
+      </div>
+  
+      <!-- Error Message -->
+      <div *ngIf="error" class="alert alert-danger">
+        {{error}}
+      </div>
+  
+      <!-- Questions List -->
+      <div class="questions-list">
+        <div *ngFor="let question of questions; let i = index; trackBy: trackByIndex" 
+             class="question-card">
+          <!-- Question Header -->
+          <div class="question-header">
+            <span class="question-number">Question {{i + 1}}</span>
+            <span class="question-type">{{question.type === 'mcq' ? 'Multiple Choice' : 'Coding'}}</span>
+            <button (click)="removeQuestion(i)" 
+                    class="btn btn-icon btn-danger" 
+                    [disabled]="loading">
+              <i class="fas fa-times"></i> X
+            </button>
+          </div>
+  
+          <!-- Question Body -->
+          <div class="question-body">
+            <!-- Question Text -->
+            <div class="form-group">
+              <label [for]="'question-' + i">Question Text</label>
+              <textarea [id]="'question-' + i"
+                       [(ngModel)]="question.questionText"
+                       class="form-control"
+                       [class.is-invalid]="!question.questionText.trim()"
+                       rows="3"
+                       [disabled]="loading"></textarea>
+            </div>
+  
+            <!-- MCQ Options -->
+            <div *ngIf="question.type === 'mcq'" class="options-container">
+              <div *ngFor="let option of getOptions(question); let j = index; trackBy: trackByIndex" 
+                   class="option-row">
+                <input type="text"
+                       [value]="option"
+                       (input)="updateOption(i, j, $event)"
+                       class="form-control"
+                       [class.is-invalid]="!option.trim()"
+                       [placeholder]="'Option ' + (j + 1)"
+                       [disabled]="loading"/>
+                <div class="radio-wrapper">
+                  <input type="radio"
+                         [name]="'correct-' + i"
+                         [value]="j"
+                         [(ngModel)]="question.correctAnswer"
+                         [disabled]="loading"/>
+                  <label>Correct</label>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Coding Question -->
+            <div *ngIf="question.type === 'coding'" class="test-cases-container">
+              <!-- Test Cases Header -->
+              <div class="test-cases-header">
+                <h4>Test Cases</h4>
+                <button (click)="addTestCase(question)" 
+                        class="btn btn-sm btn-outline-primary"
+                        [disabled]="loading">
+                  Add Test Case
+                </button>
+              </div>
+  
+              <!-- Test Cases List -->
+              <div *ngFor="let testCase of getTestCases(question); let k = index; trackBy: trackByIndex" 
+                   class="test-case-row">
+                <div class="test-case-input">
+                  <label>Input</label>
+                  <textarea [(ngModel)]="testCase.input"
+                           class="form-control"
+                           [class.is-invalid]="!testCase.input.trim()"
+                           rows="2"
+                           [disabled]="loading"></textarea>
+                </div>
+                <div class="test-case-output">
+                  <label>Expected Output</label>
+                  <textarea [(ngModel)]="testCase.expectedOutput"
+                           class="form-control"
+                           [class.is-invalid]="!testCase.expectedOutput.trim()"
+                           rows="2"
+                           [disabled]="loading"></textarea>
+                </div>
+                <button *ngIf="getTestCases(question).length > 1"
+                        (click)="removeTestCase(question, k)"
+                        class="btn btn-sm btn-outline-danger"
+                        [disabled]="loading">
+                  Remove
+                </button>
+              </div>
+            </div>
+  
+            <!-- Marks Input -->
+            <div class="form-group marks-input">
+              <label [for]="'marks-' + i">Marks</label>
+              <input [id]="'marks-' + i"
+                     type="number"
+                     [(ngModel)]="question.marks"
+                     class="form-control"
+                     [class.is-invalid]="question.marks <= 0"
+                     min="1"
+                     [disabled]="loading"/>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Save Button -->
+      <div class="actions-footer">
+        <button (click)="saveQuestions()" 
+                class="btn btn-success" 
+                [disabled]="loading || questions.length === 0">
+          <i class="fas fa-save"></i>
+          {{loading ? 'Saving...' : 'Save Questions'}}
+        </button>
+      </div>
+    </main>
+  </div>

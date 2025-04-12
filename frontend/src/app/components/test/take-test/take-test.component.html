@@ -1,0 +1,179 @@
+<div class="test-container">
+    <div *ngIf="isLoading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading test questions...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+      <button routerLink="/explore" class="back-button">Back to Explore</button>
+    </div>
+    
+    <div *ngIf="!isLoading && !error && test" class="test-content">
+      <header class="test-header">
+        <div class="test-info">
+          <h1>{{ test.title }}</h1>
+          <span class="subject-badge">{{ test.topic?.name || 'General' }}</span>
+        </div>
+        <div class="timer" [ngClass]="timeRemaining < 300 ? 'timer-warning' : ''">
+          <div class="timer-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="timer-display">
+            <div class="timer-label">Time Remaining</div>
+            <div class="timer-countdown">{{ formattedTimeRemaining }}</div>
+          </div>
+        </div>
+      </header>
+      
+      <div class="test-body">
+        <!-- Question Palette -->
+        <div class="question-palette" [class.active]="isPaletteVisible">
+          <div class="palette-header">
+            <h3>Questions</h3>
+            <div class="progress-info">
+              <span class="progress-text">{{ answeredQuestionsCount }}/{{ questions.length }} answered</span>
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="(answeredQuestionsCount / questions.length) * 100"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="palette-grid">
+            <button 
+              *ngFor="let question of questions; let i = index" 
+              class="question-button" 
+              [class.active]="i === currentQuestionIndex"
+              [class.answered]="isQuestionAnswered(question)"
+              [class.seen]="questionStatus[i] === 'seen'"
+              (click)="goToQuestion(i)">
+              {{ i + 1 }}
+            </button>
+          </div>
+          
+          <div class="palette-legend">
+            <div class="legend-item">
+              <div class="legend-color answered"></div>
+              <span>Attempted</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color seen"></div>
+              <span>Not Attempted</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color"></div>
+              <span>Not Visited</span>
+            </div>
+          </div>
+  
+          <div class="submit-section">
+            <button 
+              class="submit-button" 
+              [disabled]="isSubmitting"
+              (click)="submitTest()">
+              {{ isSubmitting ? 'Submitting...' : 'Submit Test' }}
+            </button>
+          </div>
+        </div>
+  
+        <!-- Question Content -->
+        <div class="question-content-container">
+          <div class="question-container" *ngIf="currentQuestion">
+            <div class="question-nav">
+              <button 
+                (click)="previousQuestion()" 
+                [disabled]="currentQuestionIndex === 0"
+                class="nav-button prev-button">
+                <i class="fas fa-chevron-left"></i> Previous
+              </button>
+              <div class="question-number">
+                Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}
+              </div>
+              <button 
+                (click)="nextQuestion()" 
+                [disabled]="currentQuestionIndex === questions.length - 1"
+                class="nav-button next-button">
+                Next <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            
+            <div class="question-content">
+              <div class="question-card">
+                <h2 class="question-text">{{ currentQuestion.questionText }}</h2>
+                
+                <div *ngIf="currentQuestion.type === 'mcq'" class="options-container">
+                  <div 
+                    *ngFor="let option of currentQuestion.options; let i = index" 
+                    class="option" 
+                    [class.selected]="currentQuestion.userAnswer === i"
+                    (click)="selectOption(currentQuestionIndex, i)">
+                    <div class="option-indicator">{{ ['A', 'B', 'C', 'D'][i] }}</div>
+                    <div class="option-text">{{ option }}</div>
+                  </div>
+                </div>
+                
+                <div *ngIf="currentQuestion.type === 'coding'" class="coding-container">
+                  <div class="code-editor-header">
+                    <h3>Write your solution below:</h3>
+                  </div>
+                  <textarea 
+                    class="code-editor" 
+                    rows="12" 
+                    [(ngModel)]="currentQuestion.userCode" 
+                    (input)="updateCode(currentQuestionIndex, currentQuestion.userCode || '')">
+                  </textarea>
+                  
+                  <div class="test-cases" *ngIf="currentQuestion.testCases && currentQuestion.testCases.length > 0">
+                    <h3>Test Cases</h3>
+                    <div class="test-cases-container">
+                      <div class="test-case" *ngFor="let testCase of currentQuestion.testCases; let i = index">
+                        <div class="test-case-header">Test Case {{ i + 1 }}</div>
+                        <div class="test-case-body">
+                          <div class="test-case-input">
+                            <span class="label">Input:</span>
+                            <pre>{{ testCase.input }}</pre>
+                          </div>
+                          <div class="test-case-output">
+                            <span class="label">Expected Output:</span>
+                            <pre>{{ testCase.expectedOutput }}</pre>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="question-actions">
+                <div class="mark-status">
+                  <span *ngIf="currentQuestion.marks">This question is worth {{ currentQuestion.marks }} marks</span>
+                </div>
+                <div class="navigation-buttons">
+                  <button 
+                    (click)="previousQuestion()" 
+                    [disabled]="currentQuestionIndex === 0"
+                    class="action-button">
+                    <i class="fas fa-arrow-left"></i> Previous
+                  </button>
+                  <button 
+                    (click)="nextQuestion()" 
+                    [disabled]="currentQuestionIndex === questions.length - 1"
+                    class="action-button primary">
+                    Next <i class="fas fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile view palette toggle button -->
+      <button 
+        class="palette-toggle" 
+        (click)="togglePalette()"
+        aria-label="Toggle question palette">
+        <i class="fas" [class.fa-list]="!isPaletteVisible" [class.fa-times]="isPaletteVisible"></i>
+      </button>
+    </div>
+  </div>

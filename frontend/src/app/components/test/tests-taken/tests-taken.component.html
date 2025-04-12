@@ -1,0 +1,51 @@
+<div class="test-list-container">
+    <header class="page-header">
+      <h1>Tests You've Taken</h1>
+      <p class="subtitle">View your submitted assessments and results</p>
+    </header>
+    
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading your submissions...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+    </div>
+    
+    <div *ngIf="!isLoading && !error && submissions.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="15" y2="15"></line>
+        </svg>
+      </div>
+      <h2>No Tests Taken Yet</h2>
+      <p>Start taking assessments to see your results here</p>
+      <button class="primary-button" routerLink="/explore">Explore Tests</button>
+    </div>
+    
+    <div *ngIf="!isLoading && submissions.length > 0" class="tests-grid">
+      <div class="test-card" *ngFor="let submission of submissions">
+        <div class="test-content">
+          <h3 class="test-title">{{ submission.testTitle }}</h3>
+          
+          <div class="score-section">
+            <div class="score-circle" [ngClass]="getScoreColor(submission.percentage)">
+              <span class="score-percentage">{{ submission.percentage | number:'1.0-0' }}%</span>
+            </div>
+            <div class="score-details">
+              <div class="score-text">Score: {{ submission.score }}/{{ submission.totalPossibleScore }}</div>
+              <div class="submission-date">Taken on: {{ submission.submittedAt | date:'medium' }}</div>
+            </div>
+          </div>
+          
+          <div class="test-actions">
+            <button class="primary-button" [routerLink]="['/leaderboard', submission.testId]">View Leaderboard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

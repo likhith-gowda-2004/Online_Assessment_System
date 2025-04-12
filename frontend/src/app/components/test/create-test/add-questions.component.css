@@ -1,0 +1,254 @@
+/* styles.css */
+
+/* Base */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e8e8e8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.page-container {
+  max-width: 1000px;
+  margin: 1rem auto;
+  padding: 2rem;
+  background-color: #ffffffe5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+/* Header */
+.page-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+  color: #2c3e50;
+}
+
+.page-header .subtitle {
+  color: #1e2021d3;
+  font-size: 1.5rem;
+}
+
+/* Action Buttons */
+.actions-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #495057;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #a71d2a;
+}
+
+.btn-outline-primary,
+.btn-outline-danger {
+  background-color: transparent;
+  border: 1px solid;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.btn-outline-primary:hover:not(:disabled) {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover:not(:disabled) {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Question Cards */
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.question-card {
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.question-number {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.question-type {
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+.question-body .form-group {
+  margin-bottom: 1rem;
+}
+
+.question-body label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  border: 1px solid #585447;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #495057;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: none;
+  color: #585447;
+}
+
+.is-invalid {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+/* MCQ Options */
+.options-container {
+  margin-top: 1rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.radio-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Coding Test Cases */
+.test-cases-container {
+  margin-top: 1rem;
+}
+
+.test-cases-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.test-case-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-end;
+}
+
+.test-case-input,
+.test-case-output {
+  flex: 1;
+}
+
+.marks-input input {
+  max-width: 100px;
+}
+
+/* Footer Actions */
+.actions-footer {
+  text-align: right;
+  margin-top: 2rem;
+}
+.form-group {
+  margin-bottom: 1rem;
+  color: #585447;
+}
+
+.btn btn-success {
+  background-color: #88a790;
+  color: #fff;
+}
+.btn btn-success:hover:not(:disabled) {
+  background-color: #127b29;
+}

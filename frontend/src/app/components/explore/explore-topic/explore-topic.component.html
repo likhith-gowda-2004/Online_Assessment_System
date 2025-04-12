@@ -1,0 +1,72 @@
+<div class="test-list-container">
+    <header class="page-header">
+      <h1>Tests You've Created</h1>
+      <p class="subtitle">Manage your created assessments</p>
+      <div class="action-buttons">
+        <button class="create-button" routerLink="/tests/create">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Create New Test
+        </button>
+      </div>
+    </header>
+    
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading your tests...</p>
+    </div>
+    
+    <div *ngIf="!isLoading && tests.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="15" y2="15"></line>
+        </svg>
+      </div>
+      <h2>No Tests Created Yet</h2>
+      <p>Create your first assessment to get started</p>
+      <button class="primary-button" routerLink="/tests/create">Create a Test</button>
+    </div>
+    
+    <div *ngIf="!isLoading && tests.length > 0" class="tests-grid">
+      <div class="test-card" *ngFor="let test of tests">
+        <div class="test-content">
+          <h3 class="test-title">{{test.title}}</h3>
+          <div class="test-metadata">
+            <div class="badge difficulty-{{test.difficultyLevel.toLowerCase()}}">
+              {{test.difficultyLevel}}
+            </div>
+            <div class="badge topic">
+              {{getTopicName(test.topicId)}}
+            </div>
+          </div>
+          <p class="test-description" *ngIf="test.description">
+            {{test.description.length > 120 ? (test.description | slice:0:120) + '...' : test.description}}
+          </p>
+          <div class="test-details">
+            <div class="detail-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>{{test.durationMinutes}} minutes</span>
+            </div>
+            <div class="detail-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span>{{test.questionCount}} questions</span>
+            </div>
+          </div>
+          <div class="test-actions">
+            <button class="primary-button" [routerLink]="['/test', test.id]">View Test</button>
+            <button class="secondary-button" [routerLink]="['/tests', test.id, 'add-questions']">Edit Questions</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

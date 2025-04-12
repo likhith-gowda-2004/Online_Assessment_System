@@ -1,0 +1,208 @@
+.instructions-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #b3b3b3;
+  }
+  
+  .loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left-color: #4f46e5;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .error-message {
+    background-color: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .back-button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+  }
+  
+  .back-button:hover {
+    background-color: #4338ca;
+  }
+  
+  .test-instructions {
+    background-color: #282828;
+    border-radius: 8px;
+    border: 1px solid #404040;
+    overflow: hidden;
+  }
+  
+  .instructions-header {
+    padding: 2rem;
+    background-color: #323232;
+    border-bottom: 1px solid #404040;
+  }
+  
+  .test-title {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+  
+  .test-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .label {
+    font-size: 0.875rem;
+    color: #b3b3b3;
+    margin-bottom: 0.25rem;
+  }
+  
+  .value {
+    font-weight: 600;
+    color: white;
+  }
+  
+  .difficulty-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .difficulty-beginner {
+    background-color: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+  }
+  
+  .difficulty-intermediate {
+    background-color: rgba(250, 204, 21, 0.2);
+    color: #facc15;
+  }
+  
+  .difficulty-advanced {
+    background-color: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+  }
+  
+  .instructions-content {
+    padding: 2rem;
+  }
+  
+  .instructions-content h2 {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+  
+  .instructions-text {
+    color: #d1d5db;
+    line-height: 1.6;
+  }
+  
+  .instructions-text p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .instructions-text ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .instructions-text li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .acceptance-section {
+    padding: 2rem;
+    background-color: #323232;
+    border-top: 1px solid #404040;
+  }
+  
+  .acceptance-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    color: #d1d5db;
+  }
+  
+  .acceptance-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cancel-button {
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: #d1d5db;
+    border: 1px solid #404040;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .cancel-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+  
+  .start-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .start-button:hover:not([disabled]) {
+    background-color: #4338ca;
+  }
+  
+  .start-button[disabled] {
+    background-color: #6b7280;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }

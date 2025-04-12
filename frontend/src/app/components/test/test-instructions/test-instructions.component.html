@@ -1,0 +1,83 @@
+<div class="instructions-container">
+    <div *ngIf="isLoading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading test information...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-message">
+      <p>{{ error }}</p>
+      <button routerLink="/explore" class="back-button">Back to Explore</button>
+    </div>
+    
+    <div *ngIf="!isLoading && !error && test" class="test-instructions">
+      <header class="instructions-header">
+        <h1 class="test-title">{{ test.title }}</h1>
+        <div class="test-meta">
+          <div class="meta-item">
+            <span class="label">Topic:</span>
+            <span class="value">{{ topicName }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Difficulty:</span>
+            <span class="value difficulty-badge" 
+                  [ngClass]="'difficulty-' + test.difficultyLevel.toLowerCase()">
+              {{ test.difficultyLevel }}
+            </span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Duration:</span>
+            <span class="value">{{ test.durationMinutes }} minutes</span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Questions:</span>
+            <span class="value">{{ test.questionCount }}</span>
+          </div>
+          <!-- Removed totalMarks item -->
+        </div>
+      </header>
+      
+      <section class="instructions-content">
+        <h2>Test Instructions</h2>
+        
+        <div class="instructions-text">
+          <p>Please read the following instructions carefully before starting the test:</p>
+          
+          <ol>
+            <li>This test consists of {{ test.questionCount }} questions and must be completed within {{ test.durationMinutes }} minutes.</li>
+            <li>Once you click "Start Test", the timer will begin and cannot be paused.</li>
+            <li>Do not refresh the page or navigate away during the test, as this may result in losing your progress.</li>
+            <li>For multiple choice questions, select the correct option by clicking on it.</li>
+            <li>For coding questions, write your solution in the provided editor. You can test your solution before submission.</li>
+            <li>Your answers are auto-saved as you progress through the test.</li>
+            <li>You can review your answers before final submission.</li>
+            <li>Once the time is up, your test will be automatically submitted.</li>
+            <li>Results will be displayed immediately after submission.</li>
+          </ol>
+          
+          <p *ngIf="test.description">
+            <strong>Additional Information:</strong><br>
+            {{ test.description }}
+          </p>
+        </div>
+      </section>
+      
+      <div class="acceptance-section">
+        <div class="acceptance-checkbox">
+          <input type="checkbox" id="accept-terms" [(ngModel)]="termsAccepted">
+          <label for="accept-terms">
+            I have read and understood the instructions, and agree to abide by them.
+          </label>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="cancel-button" routerLink="/explore">Cancel</button>
+          <button 
+            class="start-button" 
+            [disabled]="!termsAccepted"
+            (click)="startTest()">
+            Start Test
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,83 @@
+<div class="create-test-container">
+    <h2>Create a New Test</h2>
+    <form (ngSubmit)="onSubmit()" #createTestForm="ngForm">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          [(ngModel)]="test.title"
+          required
+          placeholder="Enter test title"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="topicId">Topic</label>
+        <select
+          id="topicId"
+          name="topicId"
+          [(ngModel)]="test.topicId"
+          required
+        >
+          <option value="" disabled>Select a topic</option>
+          <option *ngFor="let topic of topics" [value]="topic.id">
+            {{ topic.name }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="durationMinutes">Duration (Minutes)</label>
+        <input
+          type="number"
+          id="durationMinutes"
+          name="durationMinutes"
+          [(ngModel)]="test.durationMinutes"
+          required
+          placeholder="Enter duration in minutes"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="questionCount">Number of Questions</label>
+        <input
+          type="number"
+          id="questionCount"
+          name="questionCount"
+          [(ngModel)]="test.questionCount"
+          required
+          placeholder="Enter number of questions"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="difficultyLevel">Difficulty Level</label>
+        <select
+          id="difficultyLevel"
+          name="difficultyLevel"
+          [(ngModel)]="test.difficultyLevel"
+          required
+        >
+          <option value="BEGINNER">Beginner</option>
+          <option value="INTERMEDIATE">Intermediate</option>
+          <option value="ADVANCED">Advanced</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="test.description"
+          placeholder="Enter a brief description"
+        ></textarea>
+      </div>
+  
+      <button type="submit" [disabled]="!createTestForm.form.valid">
+        Create Test
+      </button>
+    </form>
+  </div>
