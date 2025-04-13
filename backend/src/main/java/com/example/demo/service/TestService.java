@@ -332,36 +332,49 @@ public class TestService {
 /**
  * Get all test submissions for a specific user
  */
-    public List<Map<String, Object>> getTestSubmissionsByUser(Long userId) {
+public List<Map<String, Object>> getTestSubmissionsByUser(Long userId) {
+    try {
         List<TestSubmission> submissions = testSubmissionRepository.findByUserId(userId);
-        
-        return submissions.stream().map(submission -> {
-            Map<String, Object> result = new HashMap<>();
-            result.put("id", submission.getId());
-            result.put("testId", submission.getTest().getId());
-            result.put("testTitle", submission.getTest().getTitle());
-            result.put("submittedAt", submission.getSubmittedAt());
-            
-            // Add null check for score
-            Integer score = submission.getScore();
-            int actualScore = (score != null) ? score : 0;
-            result.put("score", actualScore);
-            
-            // Get total possible score for the test
-            int totalPossibleScore = questionRepository.findByTestId(submission.getTest().getId())
-                .stream()
-                .mapToInt(Question::getMarks)
-                .sum();
-            
-            result.put("totalPossibleScore", totalPossibleScore);
-            
-            // Calculate percentage safely with null check
-            result.put("percentage", totalPossibleScore > 0 ? 
-                    (actualScore * 100.0) / totalPossibleScore : 0);
-                    
-            return result;
-        }).collect(Collectors.toList());
+        System.out.println("Found " + submissions.size() + " submissions for user " + userId);
+
+        return submissions.stream()
+            .filter(submission -> submission.getTest() != null) // Filter out submissions with null test
+            .map(submission -> {
+                Map<String, Object> result = new HashMap<>();
+                result.put("id", submission.getId());
+                
+                Test test = submission.getTest();
+                result.put("testId", test.getId());
+                result.put("testTitle", test.getTitle());
+                result.put("submittedAt", submission.getSubmittedAt());
+                
+                // Handle score with null check
+                Integer score = submission.getScore();
+                int actualScore = (score != null) ? score : 0;
+                result.put("score", actualScore);
+                
+                // Calculate total possible score safely
+                int totalPossibleScore = questionRepository.findByTestId(test.getId())
+                    .stream()
+                    .mapToInt(q -> q.getMarks() != null ? q.getMarks() : 0)
+                    .sum();
+                
+                result.put("totalPossibleScore", totalPossibleScore);
+                
+                // Calculate percentage safely
+                double percentage = totalPossibleScore > 0 ? 
+                    (actualScore * 100.0) / totalPossibleScore : 0.0;
+                result.put("percentage", Math.round(percentage * 100.0) / 100.0); // Round to 2 decimal places
+                
+                return result;
+            })
+            .collect(Collectors.toList());
+    } catch (Exception e) {
+        System.err.println("Error getting user test submissions: " + e.getMessage());
+        e.printStackTrace();
+        throw new RuntimeException("Failed to get test submissions", e);
     }
+}
     public List<LeaderboardEntry> getLeaderboardForTest(Long testId) {
         return testSubmissionRepository.findLeaderboardByTestId(testId);
     }
